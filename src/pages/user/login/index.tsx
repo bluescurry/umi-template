@@ -10,7 +10,7 @@ import {
 import { Alert, Space, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import { useIntl, Link, history, SelectLang, useModel } from 'umi';
+import { Link, history, useModel } from 'umi';
 import Footer from '@/components/Footer';
 import { fakeAccountLogin, getFakeCaptcha, LoginParamsType } from '@/services/login';
 import styles from './index.less';
@@ -47,7 +47,6 @@ const Login: React.FC<{}> = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginStateType>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
-  const intl = useIntl();
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
@@ -82,7 +81,6 @@ const Login: React.FC<{}> = () => {
   const { status, type: loginType } = userLoginState;
   return (
     <div className={styles.container}>
-      <div className={styles.lang}>{SelectLang && <SelectLang />}</div>
       <div className={styles.content}>
         <div className={styles.top}>
           <div className={styles.header}>
@@ -101,10 +99,7 @@ const Login: React.FC<{}> = () => {
             }}
             submitter={{
               searchConfig: {
-                submitText: intl.formatMessage({
-                  id: 'pages.login.submit',
-                  defaultMessage: '登录',
-                }),
+                submitText: '登录',
               },
               render: (_, dom) => dom.pop(),
               submitButtonProps: {
@@ -120,29 +115,12 @@ const Login: React.FC<{}> = () => {
             }}
           >
             <Tabs activeKey={type} onChange={setType}>
-              <Tabs.TabPane
-                key="account"
-                tab={intl.formatMessage({
-                  id: 'pages.login.accountLogin.tab',
-                  defaultMessage: '账户密码登录',
-                })}
-              />
-              <Tabs.TabPane
-                key="mobile"
-                tab={intl.formatMessage({
-                  id: 'pages.login.phoneLogin.tab',
-                  defaultMessage: '手机号登录',
-                })}
-              />
+              <Tabs.TabPane key="account" tab="账户密码登录" />
+              <Tabs.TabPane key="mobile" tab="手机号登录" />
             </Tabs>
 
             {status === 'error' && loginType === 'account' && (
-              <LoginMessage
-                content={intl.formatMessage({
-                  id: 'pages.login.accountLogin.errorMessage',
-                  defaultMessage: '账户或密码错误（admin/ant.design)',
-                })}
-              />
+              <LoginMessage content="账户或密码错误（admin/ant.design)" />
             )}
             {type === 'account' && (
               <>
@@ -152,10 +130,7 @@ const Login: React.FC<{}> = () => {
                     size: 'large',
                     prefix: <UserOutlined className={styles.prefixIcon} />,
                   }}
-                  placeholder={intl.formatMessage({
-                    id: 'pages.login.username.placeholder',
-                    defaultMessage: '用户名: admin or user',
-                  })}
+                  placeholder="用户名: admin or user"
                   rules={[
                     {
                       required: true,
@@ -169,10 +144,7 @@ const Login: React.FC<{}> = () => {
                     size: 'large',
                     prefix: <LockTwoTone className={styles.prefixIcon} />,
                   }}
-                  placeholder={intl.formatMessage({
-                    id: 'pages.login.password.placeholder',
-                    defaultMessage: '密码: ant.design',
-                  })}
+                  placeholder="密码: ant.design"
                   rules={[
                     {
                       required: true,
@@ -192,10 +164,7 @@ const Login: React.FC<{}> = () => {
                     prefix: <MobileTwoTone className={styles.prefixIcon} />,
                   }}
                   name="mobile"
-                  placeholder={intl.formatMessage({
-                    id: 'pages.login.phoneNumber.placeholder',
-                    defaultMessage: '手机号',
-                  })}
+                  placeholder="手机号"
                   rules={[
                     {
                       required: true,
@@ -215,20 +184,9 @@ const Login: React.FC<{}> = () => {
                   captchaProps={{
                     size: 'large',
                   }}
-                  placeholder={intl.formatMessage({
-                    id: 'pages.login.captcha.placeholder',
-                    defaultMessage: '请输入验证码',
-                  })}
+                  placeholder="请输入验证码"
                   captchaTextRender={(timing, count) =>
-                    timing
-                      ? `${count} ${intl.formatMessage({
-                          id: 'pages.getCaptchaSecondText',
-                          defaultMessage: '获取验证码',
-                        })}`
-                      : intl.formatMessage({
-                          id: 'pages.login.phoneLogin.getVerificationCode',
-                          defaultMessage: '获取验证码',
-                        })
+                    timing ? `${count} 获取验证码` : '获取验证码'
                   }
                   name="captcha"
                   rules={[

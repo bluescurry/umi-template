@@ -14,16 +14,14 @@ export default defineConfig({
   },
   layout: {
     name: 'Ant Design Pro',
-    locale: true,
+    locale: false,
     siderWidth: 208,
     ...defaultSettings,
   },
   locale: {
-    // default zh-CN
     default: 'zh-CN',
-    antd: true,
-    // default true, when it is true, will use `navigator.language` overwrite default
     baseNavigator: true,
+    antd: true,
   },
   dynamicImport: {
     loading: '@ant-design/pro-layout/es/PageLoading',

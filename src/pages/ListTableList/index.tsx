@@ -1,7 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
-import { useIntl } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProDescriptions, { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
@@ -92,7 +91,6 @@ const TableList: React.FC<{}> = () => {
    * 国际化配置
    */
 
-  const intl = useIntl();
   const columns: ProColumns<TableListItem>[] = [
     {
       title: '规则名称',
@@ -121,11 +119,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'callNo',
       sorter: true,
       hideInForm: true,
-      renderText: (val: string) =>
-        `${val}${intl.formatMessage({
-          id: 'pages.searchTable.tenThousand',
-          defaultMessage: ' 万 ',
-        })}`,
+      renderText: (val: string) => `${val} 万 `,
     },
     {
       title: '状态',
@@ -163,15 +157,7 @@ const TableList: React.FC<{}> = () => {
         }
 
         if (`${status}` === '3') {
-          return (
-            <Input
-              {...rest}
-              placeholder={intl.formatMessage({
-                id: 'pages.searchTable.exception',
-                defaultMessage: '请输入异常原因！',
-              })}
-            />
-          );
+          return <Input {...rest} placeholder="请输入异常原因！" />;
         }
 
         return defaultRender(item);
@@ -197,10 +183,7 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle={intl.formatMessage({
-          id: 'pages.searchTable.title',
-          defaultMessage: '查询表格',
-        })}
+        headerTitle="查询表格"
         actionRef={actionRef}
         rowKey="key"
         search={{
@@ -249,10 +232,7 @@ const TableList: React.FC<{}> = () => {
         </FooterToolbar>
       )}
       <ModalForm
-        title={intl.formatMessage({
-          id: 'pages.searchTable.createForm.newRule',
-          defaultMessage: '新建规则',
-        })}
+        title="新建规则"
         width="400px"
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
