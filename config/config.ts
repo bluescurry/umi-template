@@ -8,6 +8,7 @@ const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
   hash: true,
+  fastRefresh: {},
   antd: {},
   dva: {
     hmr: true,
@@ -17,6 +18,9 @@ export default defineConfig({
     locale: false,
     siderWidth: 208,
     ...defaultSettings,
+  },
+  qiankun: {
+    slave: {},
   },
   locale: {
     default: 'zh-CN',
@@ -49,6 +53,10 @@ export default defineConfig({
     exclude: [],
     babelPlugins: [],
     babelOptions: {},
+  },
+  // 数据转换都交给了 cving-request，umi-request 不需要做处理
+  request: {
+    dataField: '',
   },
   resolve: {
     includes: ['src/components'],

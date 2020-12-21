@@ -32,4 +32,14 @@ declare namespace API {
     extra: any;
     status: string;
   }
+
+  /** 常量数据 */
+  export interface ConstantData {
+    shop_category: {
+      [propName: string]: string;
+    };
+    activity_type_b: {
+      [propName: string]: string;
+    };
+  }
 }

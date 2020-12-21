@@ -1,9 +1,20 @@
 import React from 'react';
 import { HeartTwoTone, SmileTwoTone } from '@ant-design/icons';
-import { Card, Typography, Alert } from 'antd';
+import { Card, Typography, Alert, Button } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { getConstant } from '@/services/constant';
+import { Access, useAccess, useRequest } from 'umi';
 
 export default (): React.ReactNode => {
+  const access = useAccess();
+
+  const { data, error, loading } = useRequest<API.ConstantData>(() => {
+    return getConstant();
+  });
+  console.log('error ---> ', error);
+  console.log('data ---> ', data);
+  console.log('loading ---> ', loading);
+
   return (
     <PageHeaderWrapper content="这个页面只有 admin 权限才能查看">
       <Card>
@@ -38,6 +49,10 @@ export default (): React.ReactNode => {
         </a>
         。
       </p>
+      {loading ? <p>loading...</p> : <p>{JSON.stringify(data)}</p>}
+      <Access accessible={access.canAdmin} fallback={null}>
+        <Button type="primary">带权限的按钮</Button>
+      </Access>
     </PageHeaderWrapper>
   );
 };

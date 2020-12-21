@@ -12,6 +12,7 @@ export async function fakeAccountLogin(params: LoginParamsType) {
   return request<API.LoginStateType>('/api/login/account', {
     method: 'POST',
     data: params,
+    skipErrorHandler: true,
   });
 }
 
